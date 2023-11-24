@@ -8,7 +8,7 @@
       <el-form-item>
         <!-- 用户名图标 -->
         <span class="svg-container">
-          <svg-icon icon="https://res.lgdsunday.club/user.svg"/>
+          <svg-icon icon="user"/>
         </span>
         <el-input placeholder="username" name="username" type="text"></el-input>
       </el-form-item>
@@ -16,11 +16,13 @@
       <el-form-item>
         <!-- 密码图标 -->
         <span class="svg-container">
-          <svg-icon icon="https://res.lgdsunday.club/user.svg"/>
+          <svg-icon icon="password"/>
         </span>
         <el-input placeholder="password" name="password"></el-input>
         <span class="show-pwd">
-          <svg-icon icon="https://res.lgdsunday.club/user.svg"/>
+          <span class="svg-container">
+            <svg-icon icon="eye"/>
+          </span>
         </span>
       </el-form-item>
 
@@ -33,7 +35,7 @@
 <script setup>
 // 导入的组件可以直接使用，不用通过component来进行注册了
 // import { Avatar } from '@element-plus/icons'
-import SvgIcon from '@/components/SvgIcon/index.vue'
+// import SvgIcon from '@/components/SvgIcon/index.vue'
 import {} from 'vue'
 </script>
 

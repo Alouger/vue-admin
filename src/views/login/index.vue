@@ -1,33 +1,48 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form class="login-form" :model="loginForm" :rules="loginRules">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
+
       <!-- 用户名 -->
-      <el-form-item>
+      <!-- Form 组件提供了表单验证的功能，只需为 rules 属性传入约定的验证规则，
+        并将 form-Item 的 prop 属性设置为需要验证的特殊键值即可。 -->
+      <el-form-item prop="username">
         <!-- 用户名图标 -->
         <span class="svg-container">
-          <svg-icon icon="user"/>
+          <svg-icon icon="user" />
         </span>
-        <el-input placeholder="username" name="username" type="text"></el-input>
+        <el-input
+          placeholder="username"
+          name="username"
+          type="text"
+          v-model="loginForm.username"
+        ></el-input>
       </el-form-item>
+
       <!-- 密码 -->
-      <el-form-item>
+      <el-form-item prop="password">
         <!-- 密码图标 -->
         <span class="svg-container">
-          <svg-icon icon="password"/>
+          <svg-icon icon="password" />
         </span>
-        <el-input placeholder="password" name="password"></el-input>
+        <el-input
+          placeholder="password"
+          name="password"
+          v-model="loginForm.password"
+        ></el-input>
         <span class="show-pwd">
           <span class="svg-container">
-            <svg-icon icon="eye"/>
+            <svg-icon icon="eye" />
           </span>
         </span>
       </el-form-item>
 
       <!-- 登录按钮 -->
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px;">登录</el-button>
+      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
+        >登录</el-button
+      >
     </el-form>
   </div>
 </template>
@@ -36,7 +51,33 @@
 // 导入的组件可以直接使用，不用通过component来进行注册了
 // import { Avatar } from '@element-plus/icons'
 // import SvgIcon from '@/components/SvgIcon/index.vue'
-import {} from 'vue'
+import { ref } from 'vue'
+import { validatePassword } from './rules'
+
+// 数据源
+const loginForm = ref({
+  username: 'super-admin',
+  password: '123456'
+})
+
+// 验证规则
+const loginRules = ref({
+  username: [
+    {
+      required: true,
+      trigger: 'blur',
+      message: '用户名为必填项'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      trigger: 'blur',
+      // 新建一个文件写一个函数来验证
+      validator: validatePassword()
+    }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>

@@ -31,11 +31,14 @@
           placeholder="password"
           name="password"
           v-model="loginForm.password"
+          :type="passwordType"
         ></el-input>
-        <span class="show-pwd">
-          <span class="svg-container">
-            <svg-icon icon="eye" />
-          </span>
+        <span class="show-pwd" @click="onChangePwdType">
+          <!-- <span class="svg-container"> -->
+            <svg-icon
+              :icon="passwordType === 'password' ? 'eye' : 'eye-open'"
+            />
+          <!-- </span> -->
         </span>
       </el-form-item>
 
@@ -78,6 +81,18 @@ const loginRules = ref({
     }
   ]
 })
+
+// 密码框状态
+const passwordType = ref('password')
+// template中绑定的方法，直接声明即可
+// 使用 ref 声明的数据，在script中使用时，需要加value来获取具体的值，但是在tempalte中使用的时候，不需要加 value
+const onChangePwdType = () => {
+  if (passwordType.value === 'password') {
+    passwordType.value = 'text'
+  } else {
+    passwordType.value = 'password'
+  }
+}
 </script>
 
 <style lang="scss" scoped>

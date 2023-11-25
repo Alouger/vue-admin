@@ -1,6 +1,11 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" :model="loginForm" :rules="loginRules">
+    <el-form
+      class="login-form"
+      ref="loginFormRef"
+      :model="loginForm"
+      :rules="loginRules"
+    >
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
@@ -35,15 +40,17 @@
         ></el-input>
         <span class="show-pwd" @click="onChangePwdType">
           <!-- <span class="svg-container"> -->
-            <svg-icon
-              :icon="passwordType === 'password' ? 'eye' : 'eye-open'"
-            />
+          <svg-icon :icon="passwordType === 'password' ? 'eye' : 'eye-open'" />
           <!-- </span> -->
         </span>
       </el-form-item>
 
       <!-- 登录按钮 -->
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
+      <el-button
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        @click="handleLogin"
+        :loding="loading"
         >登录</el-button
       >
     </el-form>
@@ -56,6 +63,7 @@
 // import SvgIcon from '@/components/SvgIcon/index.vue'
 import { ref } from 'vue'
 import { validatePassword } from './rules'
+import { useStore } from 'vuex'
 
 // 数据源
 const loginForm = ref({
@@ -92,6 +100,33 @@ const onChangePwdType = () => {
   } else {
     passwordType.value = 'password'
   }
+}
+
+// 处理登录
+const loading = ref(false)
+// 通过useStore()获得vuex实例
+const store = useStore()
+// 通过创建一个值为null的ref变量，会自动取template中找相同变量名的引用ref，而不是像Vue2那样，写this.$refs.loginFormRef
+const loginFormRef = ref(null)
+const handleLogin = () => {
+  // 触发user.js中的login这个action
+  // 1. 进行表单校验
+  loginFormRef.value.validate((valid) => {
+    // 如果表单校验没有通过
+    if (!valid) return
+    // 2. 如果表单验证通通过，则触发登录动作
+    loading.value = true
+    store
+      .dispatch('user/login', loginForm.value)
+      .then(() => {
+        loading.value = false
+        // 3. 进行登录后处理
+      })
+      .catch((err) => {
+        console.log(err)
+        loading.value = false
+      })
+  })
 }
 </script>
 

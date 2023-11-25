@@ -1,10 +1,21 @@
 import { login } from '@/api/sys'
 import md5 from 'md5'
+import { getItem, setItem } from '@/utils/storage'
+import { TOKEN } from '@/constant'
 
 export default {
   namespaced: true,
-  state: () => ({}),
-  mutations: {},
+  state: () => ({
+    // 如果获取不到TOKEN才指定一个空字符串，否则只指定为空字符串的话，自动登录的需求无法实现
+    token: getItem(TOKEN) || ''
+  }),
+  mutations: {
+    setToken (state, token) {
+      state.token = token
+      // 把token保存到localStorage
+      setItem(TOKEN, token)
+    }
+  },
   actions: {
     /**
      * 登录请求动作
@@ -20,6 +31,8 @@ export default {
           password: md5(password)
         })
           .then((data) => {
+            console.log(data)
+            this.commit('user/setToken', data.token)
             resolve()
           })
           .catch((err) => {

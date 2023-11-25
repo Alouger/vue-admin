@@ -1,6 +1,7 @@
 import axios from 'axios'
 import md5 from 'md5'
 import { ElMessage } from 'element-plus'
+import store from '@/store'
 
 const service = axios.create({
   // 实现在开发和生产环境下，可以设定不同baseUrl的能力
@@ -14,16 +15,16 @@ service.interceptors.request.use(
     const { icode, time } = getTestICode()
     config.headers.icode = icode
     config.headers.codeType = time
-    // // 在这个位置需要统一的去注入token
-    // if (store.getters.token) {
-    //   // 如果token存在 注入token
-    //   config.headers.Authorization = `Bearer ${store.getters.token}`
+    // 在这个位置需要统一的去注入token
+    if (store.getters.token) {
+      // 如果token存在 注入token
+      config.headers.Authorization = `Bearer ${store.getters.token}`
     //   if (isCheckTimeout()) {
     //     // 登出操作
     //     store.dispatch('user/logout')
     //     return Promise.reject(new Error('token 失效'))
     //   }
-    // }
+    }
     // // 配置接口国际化
     // config.headers['Accept-Language'] = store.getters.language
     return config // 必须返回配置

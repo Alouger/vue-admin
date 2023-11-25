@@ -10,7 +10,7 @@ const whiteList = ['/login']
  * @param {*} from 从哪个路由来
  * @param {*} next 是否要跳转？
  */
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // if (store.state.user.token)
   // 快捷访问
   if (store.getters.token) {
@@ -18,6 +18,12 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next('/')
     } else {
+      // 判断用户资料是否获取
+      // 若不存在用户信息，则需要获取用户信息
+      if (!store.getters.hasUserInfo) {
+        // 触发获取用户信息的action
+        await store.dispatch('user/getUserInfo')
+      }
       // 允许进入其他页面，next()不传入参数
       next()
     }

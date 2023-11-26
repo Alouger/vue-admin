@@ -1,3 +1,5 @@
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
+
 const path = require('path')
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -35,5 +37,9 @@ module.exports = defineConfig({
         changeOrigin: true // 是否跨域
       }
     }
+  },
+  configureWebpack: config => {
+    const plugins = []
+    plugins.push(new NodePolyfillPlugin())
   }
 })

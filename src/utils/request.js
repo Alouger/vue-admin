@@ -3,7 +3,6 @@ import md5 from 'md5'
 import { ElMessage } from 'element-plus'
 import store from '@/store'
 import { isCheckTimeout } from './auth'
-import { TOKEN_TIMEOUT_VALUE } from '@/constant'
 
 const service = axios.create({
   // 实现在开发和生产环境下，可以设定不同baseUrl的能力
@@ -23,7 +22,6 @@ service.interceptors.request.use(
       if (isCheckTimeout()) {
         // 登出操作
         store.dispatch('user/logout')
-        console.log('TOKEN_TIMEOUT_VALUE:', TOKEN_TIMEOUT_VALUE)
         return Promise.reject(new Error('token 失效'))
       }
       // 如果token存在 注入token
@@ -48,8 +46,8 @@ service.interceptors.response.use(
   // 请求成功的回调函数
   (response) => {
     const { success, message, data } = response.data
-    console.log('response', response)
-    console.log('response.data', response.data)
+    // console.log('response', response)
+    // console.log('response.data', response.data)
     // 此时response就是data.data.data.token中第一个data
     // 判断当前请求是否成功
     if (success) {

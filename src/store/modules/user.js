@@ -1,6 +1,6 @@
 import { login, getUserInfo } from '@/api/sys'
 import md5 from 'md5'
-import { getItem, setItem } from '@/utils/storage'
+import { getItem, removeAllItem, setItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
 import router from '@/router'
 
@@ -12,7 +12,7 @@ export default {
     userInfo: {}
   }),
   mutations: {
-    setToken (state, token) {
+    setToken(state, token) {
       state.token = token
       // 把token保存到localStorage
       setItem(TOKEN, token)
@@ -53,6 +53,22 @@ export default {
       const res = await getUserInfo()
       this.commit('user/setUserInfo', res)
       return res
+    },
+    /**
+     * 退出登录
+     * 无论是用户主动退出还是被动退出，在用户退出时，所需要执行的操作都是固定的：
+     * 1. 清理掉当前用户缓存数据
+     * 2. 清理掉权限相关配置
+     * 3. 返回到登录页
+     */
+    logout() {
+      // 清理掉当前用户缓存数据
+      this.commit('user/setToken', '')
+      this.commit('user/setUserInfo', {})
+      removeAllItem()
+      // 返回到登录页
+      router.push('/login')
+      // TODO: 清理掉权限相关配置
     }
   }
 }

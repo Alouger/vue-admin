@@ -3,7 +3,9 @@
   <!-- unique-opened 是否只保持一个子菜单的展开 -->
   <!-- default-active 页面加载时默认激活菜单的 index -->
   <!-- router 是否启用 vue-router 模式。 启用该模式会在激活导航时以 index 作为 path 进行路由跳转 使用 default-active 来设置加载时的激活项。 -->
+  <!-- collapse 是否水平折叠收起菜单（仅在 mode 为 vertical 时可用） -->
   <el-menu
+    :collapse="!$store.getters.sidebarOpened"
     :unique-opened="true"
     :default-active="activeMenu"
     :background-color="$store.getters.cssVar.menuBg"

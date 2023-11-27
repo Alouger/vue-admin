@@ -13,6 +13,7 @@ const getters = {
     // 而是转成JSON字符串来看不是空对象
     return JSON.stringify(state.user.userInfo) !== '{}'
   },
-  cssVar: state => variables
+  cssVar: state => variables,
+  sidebarOpened: state => state.app.sidebarOpened
 }
 export default getters

@@ -98,7 +98,7 @@ const logout = () => {
         position: relative;
 
         .el-avatar {
-          --el-avatar-background-color: none;
+          --el-avatar-bg-color: none;
           margin-right: 12px;
         }
       }

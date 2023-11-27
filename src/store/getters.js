@@ -1,3 +1,5 @@
+import variables from '@/styles/variables.module.scss'
+
 // 快捷访问
 const getters = {
   token: (state) => state.user.token,
@@ -10,6 +12,7 @@ const getters = {
     // 如果是这种方式并且state.user.userInfo等于初始值{}的话!state.user.userInfo得到的结果是false, state.user.userInfo得到的结果为true
     // 而是转成JSON字符串来看不是空对象
     return JSON.stringify(state.user.userInfo) !== '{}'
-  }
+  },
+  cssVar: state => variables
 }
 export default getters

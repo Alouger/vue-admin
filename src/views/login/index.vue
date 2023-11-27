@@ -7,7 +7,8 @@
       :rules="loginRules"
     >
       <div class="title-container">
-        <h3 class="title">用户登录</h3>
+        <h3 class="title">{{ $t('msg.login.title') }}</h3>
+        <lang-select class="lang-select"></lang-select>
       </div>
 
       <!-- 用户名 -->
@@ -51,8 +52,10 @@
         style="width: 100%; margin-bottom: 30px"
         @click="handleLogin"
         :loding="loading"
-        >登录</el-button
+        >{{ $t('msg.login.loginBtn') }}</el-button
       >
+
+      <div class="tips" v-html="$t('msg.login.desc')"></div>
     </el-form>
   </div>
 </template>
@@ -64,6 +67,8 @@
 import { ref } from 'vue'
 import { validatePassword } from './rules'
 import { useStore } from 'vuex'
+import LangSelect from '@/components/LangSelect'
+import { useI18n } from 'vue-i18n'
 
 // 数据源
 const loginForm = ref({
@@ -72,12 +77,14 @@ const loginForm = ref({
 })
 
 // 验证规则
+const i18n = useI18n()
 const loginRules = ref({
   username: [
     {
       required: true,
       trigger: 'blur',
-      message: '用户名为必填项'
+      // message: '用户名为必填项'
+      message: i18n.t('msg.login.usernameRule')
     }
   ],
   password: [
@@ -149,35 +156,45 @@ $cursor: #fff;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
-  }
 
-  // template中我们用到了el-form-item，它会自动带有一个类名，也就是class="el-form-item"，
-  // 因为它是我们当前组件中的一个子组件的一个类名，
-  // 所以我们想在父组件里面为子组件指定样式的话就要用到深度选择器::v-deep来选择到子组件里面一个具体的类名
-  ::v-deep .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
+    // template中我们用到了el-form-item，它会自动带有一个类名，也就是class="el-form-item"，
+    // 因为它是我们当前组件中的一个子组件的一个类名，
+    // 所以我们想在父组件里面为子组件指定样式的话就要用到深度选择器::v-deep来选择到子组件里面一个具体的类名
+    ::v-deep .el-form-item {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      color: #454545;
+    }
 
-  ::v-deep .el-input {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
+    ::v-deep .el-input {
+      display: inline-block;
+      height: 47px;
+      width: 85%;
+      line-height: 47px;
 
-    // el-input内部的input
-    input {
-      background: transparent;
-      border: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      // 光标颜色
-      caret-color: $cursor;
+      // el-input内部的input
+      input {
+        background: transparent;
+        // background-color: none;
+        border: none;
+        border-radius: 0px;
+        padding: 12px 5px 12px 15px;
+        color: $light_gray;
+        // 光标颜色
+        caret-color: $cursor;
+      }
+      .el-input__wrapper {
+        background-color: transparent;
+        box-shadow: none;
+      }
     }
   }
-
+  .tips {
+      font-size: 16px;
+      color: white;
+      line-height: 24px;
+    }
   .svg-container {
     padding: 6px 5px 6px 15px;
     color: $dark_gray;
@@ -206,6 +223,18 @@ $cursor: #fff;
     color: $dark_gray;
     cursor: pointer;
     use-select: none;
+  }
+
+  /* 教程里加了::v-deep，但我没加::v-deep的话也能正确显示LangSelect组件 */
+  ::v-deep .lang-select {
+    position: absolute;
+    top: 4px;
+    right: 0px;
+    font-size: 22px;
+    background-color: #fff;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
   }
 }
 </style>

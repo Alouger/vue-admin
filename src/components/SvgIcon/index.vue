@@ -1,20 +1,22 @@
 <template>
-  <!-- 展示外部图标 -->
-  <div
-    v-if="isExternal"
-    :style="styleExternalIcon"
-    class="svg-external-icon svg-icon"
-    :class="className"
-  ></div>
-  <!-- 展示内部图标 -->
-  <!-- 把 aria-hidden="true" 加到元素上会把该元素和它的所有子元素从无障碍树上移除。这样做可以通过隐藏下列内容来提升使用辅助技术的用户体验：
-      1. 纯装饰性的内容，如图标、图片
-      2. 重复的内容，如重复的文本
-      3. 屏幕外或被折叠的内容，如菜单 -->
-  <svg v-else class="svg-icon" :class="className" aria-hidden="true">
-    <!-- 使用XLink属性来引用一个名为"iconName"的图标 -->
-    <use :xlink:href="iconName" />
-  </svg>
+  <div>
+    <!-- 展示外部图标 -->
+    <div
+      v-if="isExternal"
+      :style="styleExternalIcon"
+      class="svg-external-icon svg-icon"
+      :class="className"
+    ></div>
+    <!-- 展示内部图标 -->
+    <!-- 把 aria-hidden="true" 加到元素上会把该元素和它的所有子元素从无障碍树上移除。这样做可以通过隐藏下列内容来提升使用辅助技术的用户体验：
+        1. 纯装饰性的内容，如图标、图片
+        2. 重复的内容，如重复的文本
+        3. 屏幕外或被折叠的内容，如菜单 -->
+    <svg v-else class="svg-icon" :class="className" aria-hidden="true">
+      <!-- 使用XLink属性来引用一个名为"iconName"的图标 -->
+      <use :xlink:href="iconName" />
+    </svg>
+  </div>
 </template>
 
 <script setup>

@@ -1,4 +1,7 @@
-import variables from '@/styles/variables.module.scss'
+// import variables from '@/styles/variables.module.scss'
+import { MAIN_COLOR } from '@/constant'
+import { getItem } from '@/utils/storage'
+import { generateColors } from '@/utils/theme'
 
 // 快捷访问
 const getters = {
@@ -13,7 +16,13 @@ const getters = {
     // 而是转成JSON字符串来看不是空对象
     return JSON.stringify(state.user.userInfo) !== '{}'
   },
-  cssVar: state => variables,
+  cssVar: state => {
+    return {
+      // ...variables,
+      ...state.theme.variables,
+      ...generateColors(getItem(MAIN_COLOR))
+    }
+  },
   sidebarOpened: state => state.app.sidebarOpened,
   language: state => state.app.language,
   mainColor: state => state.theme.mainColor

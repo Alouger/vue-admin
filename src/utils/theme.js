@@ -57,7 +57,7 @@ const getOriginalStyle = async () => {
   const version = require('element-plus/package.json').version
   const url = `https://unpkg.com/element-plus@${version}/dist/index.css`
   const { data } = await axios(url)
-  console.log(data)
+  // console.log(data)
   // 把获取到的数据筛选为原样式模板
   return getStyleTemplate(data)
 }

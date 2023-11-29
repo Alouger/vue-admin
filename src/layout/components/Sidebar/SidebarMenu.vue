@@ -40,8 +40,8 @@ const routes = computed(() => {
   const fRoutes = filterRoutes(router.getRoutes())
   return generateMenus(fRoutes)
 })
-console.log(routes.value)
-console.log(JSON.stringify(routes.value))
+// console.log(routes.value)
+// console.log(JSON.stringify(routes.value))
 </script>
 
 <style scoped></style>

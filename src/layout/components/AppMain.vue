@@ -2,7 +2,16 @@
   <div class="app-main">
     <!-- router-link 实现路由之间的跳转
          router-view 当你的路由path 与访问的地址相符时，会将指定的组件替换该 router-view -->
-    <router-view></router-view>
+    <!-- 我们现在写的这个是带有基于路由的动态过渡动画，并且具备组件缓存的router-view，这是vue-router官方文档上的固定写法 -->
+    <router-view v-slot="{ Component, route }">
+      <transition name="fade-transform" mode="out-in">
+        <keep-alive>
+          <div :key="route.path">
+            <component :is="Component"></component>
+          </div>
+        </keep-alive>
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -73,11 +82,11 @@ watchSwitchLang(() => {
 
 <style lang="scss" scoped>
 .app-main {
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 50px - 43px);
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding: 61px 20px 20px 20px;
+  padding: 104px 20px 20px 20px;
   box-sizing: border-box;
 }
 </style>

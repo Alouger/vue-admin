@@ -12,7 +12,6 @@ const whiteList = ['/login']
  */
 router.beforeEach(async (to, from, next) => {
   // if (store.state.user.token)
-  console.log(store.getters.token)
   // 快捷访问
   if (store.getters.token) {
     // 1. 用户已登录的话(通过token判断)，则不允许进入login

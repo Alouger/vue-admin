@@ -1,29 +1,39 @@
 <template>
   <div class="tags-view-container">
-    <router-link
-      v-for="(tag, index) in $store.getters.tagsViewList"
-      :key="tag.fullPath"
-      class="tags-view-item"
-      :class="isActive(tag) ? 'active' : ''"
-      :style="{
-        backgroundColor: isActive(tag) ? $store.getters.cssVar.menuBg : '',
-        borderColor: isActive(tag) ? $store.getters.cssVar.menuBg : ''
-      }"
-      :to="{ path: tag.fullPath }"
-    >
-      {{ tag.title }}
-      <el-icon
-        v-show="!isActive(tag)"
-        class="el-icon-close"
-        @click.prevent.stop="onCloseClick(index)"
-        ><Close
-      /></el-icon>
-    </router-link>
+    <el-scrollbar class="tags-view-wrapper">
+      <router-link
+        v-for="(tag, index) in $store.getters.tagsViewList"
+        :key="tag.fullPath"
+        class="tags-view-item"
+        :class="isActive(tag) ? 'active' : ''"
+        :style="{
+          backgroundColor: isActive(tag) ? $store.getters.cssVar.menuBg : '',
+          borderColor: isActive(tag) ? $store.getters.cssVar.menuBg : ''
+        }"
+        :to="{ path: tag.fullPath }"
+        @contextmenu.prevent="openMenu($event, index)"
+      >
+        {{ tag.title }}
+        <el-icon
+          v-show="!isActive(tag)"
+          class="el-icon-close"
+          @click.prevent.stop="onCloseClick(index)"
+          ><Close
+        /></el-icon>
+      </router-link>
+    </el-scrollbar>
+    <context-menu
+      v-show="visible"
+      :style="menuStyle"
+      :index="selectIndex"
+    ></context-menu>
   </div>
 </template>
 
 <script setup>
+import { ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
+import ContextMenu from './ContextMenu.vue'
 
 const route = useRoute()
 /**
@@ -37,6 +47,25 @@ const isActive = (tag) => {
  * 关闭 tag 的点击事件
  */
 const onCloseClick = (index) => {}
+
+// contextMenu相关
+const selectIndex = ref(0)
+const visible = ref(false)
+const menuStyle = reactive({
+  left: 0,
+  top: 0
+})
+
+/**
+ * 展示menu
+ */
+const openMenu = (e, index) => {
+  const { x, y } = e
+  menuStyle.left = x + 'px'
+  menuStyle.top = y + 'px'
+  selectIndex.value = index
+  visible.value = true
+}
 </script>
 
 <style lang="scss" scoped>

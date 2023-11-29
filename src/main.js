@@ -12,9 +12,16 @@ import installIcons from '@/icons'
 // 导入路由鉴权
 import './permission'
 
+import * as EleIcons from '@element-plus/icons-vue'
+
 const app = createApp(App)
 installElementPlus(app)
 installIcons(app)
+
+for (const name in EleIcons) {
+  app.component(name, EleIcons[name])
+}
+
 app.use(store).use(router).use(i18n).mount('#app')
 
 const debounce = (fn, delay) => {

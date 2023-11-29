@@ -32,6 +32,14 @@ export default {
         state.tagsViewList.push(tag)
         setItem(TAGS_VIEW, state.tagsViewList)
       }
+    },
+    /**
+     * 为指定的tag修改title
+     * 这里传入的tag是已经修改好title的新tag
+     */
+    changeTagsView(state, { index, tag }) {
+      state.tagsViewList[index] = tag
+      setItem(TAGS_VIEW, state.tagsViewList)
     }
   }
 }

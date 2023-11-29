@@ -12,6 +12,8 @@
       <div class="fixed-header">
         <!-- 顶部的navbar -->
         <navbar />
+        <!-- tags -->
+        <tags-view></tags-view>
       </div>
       <!-- 内容区 -->
       <app-main />
@@ -25,6 +27,7 @@ import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar'
 import AppMain from './components/AppMain.vue'
 // import variables from '@/styles/variables.module.scss'
+import TagsView from '@/components/TagsView'
 </script>
 
 <style lang="scss" scoped>
@@ -48,6 +51,6 @@ import AppMain from './components/AppMain.vue'
 }
 
 .hideSidebar .fixed-header {
-  width: calc(100% - #{$hideSideBarWidth})
+  width: calc(100% - #{$hideSideBarWidth});
 }
 </style>

@@ -4,11 +4,11 @@
     trigger="click"
     class="theme"
     @command="handleSetTheme"
-    >
+  >
     <div>
       <el-tooltip :content="$t('msg.navBar.themeChange')">
         <!-- 图标 -->
-        <svg-icon icon="change-theme" />
+        <svg-icon id="guide-theme" icon="change-theme" />
       </el-tooltip>
     </div>
     <!-- menu -->
@@ -31,11 +31,9 @@ import SelectColor from './components/SelectColor.vue'
 import { ref } from 'vue'
 
 const selectColorVisible = ref(false)
-const handleSetTheme = command => {
+const handleSetTheme = (command) => {
   selectColorVisible.value = true
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

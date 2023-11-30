@@ -96,6 +96,7 @@ defineProps({
       }
     }
     .pan-info-roles-container {
+      font-size: 13px;
       padding: 20px;
       text-align: center;
     }

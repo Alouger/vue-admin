@@ -14,9 +14,13 @@ import './permission'
 
 import * as EleIcons from '@element-plus/icons-vue'
 
+// filter
+import installFilter from '@/filter'
+
 const app = createApp(App)
 installElementPlus(app)
 installIcons(app)
+installFilter(app)
 
 for (const name in EleIcons) {
   app.component(name, EleIcons[name])

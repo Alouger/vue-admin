@@ -42,10 +42,11 @@
           </template>
         </el-table-column>
         <!-- 时间 -->
-        <el-table-column
-          :label="$t('msg.excel.openTime')"
-          prop="openTime"
-        ></el-table-column>
+        <el-table-column :label="$t('msg.excel.openTime')" prop="openTime">
+          <template #default="{ row }">
+            {{ $filters.dateFilter(row.openTime) }}
+          </template>
+        </el-table-column>
         <!-- 操作 -->
         <el-table-column
           :label="$t('msg.excel.action')"

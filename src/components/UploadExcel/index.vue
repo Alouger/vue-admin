@@ -30,7 +30,8 @@
 <script setup>
 import XLSX from 'xlsx'
 import { defineProps, ref } from 'vue'
-import { getHeaderRow } from './utils'
+import { getHeaderRow, isExcel } from './utils'
+import { ElMessage } from 'element-plus'
 
 const props = defineProps({
   // 上传前回调
@@ -125,6 +126,34 @@ const readerData = (rawFile) => {
  */
 const generateData = (excelData) => {
   props.onSuccess && props.onSuccess(excelData)
+}
+
+/**
+ * 拖拽文本释放时触发
+ */
+const handleDrop = (e) => {
+  // 上传中跳过
+  if (loading.value) return
+  const files = e.dataTransfer.files
+  if (files.length !== 1) {
+    ElMessage.erroe('必须要有一个文件')
+    return
+  }
+  const rawFile = files[0]
+  if (!isExcel(rawFile)) {
+    ElMessage.error('文件必须是 .xlsx, .xls, .csv 格式')
+    return false
+  }
+  // 触发上传事件
+  upload(rawFile)
+}
+
+/**
+ * 拖拽悬停时触发
+ * 当拖拽事件发生时，将拖拽数据的 dropEffect 设置为 'copy'，即将数据复制到目标位置。
+ */
+const handleDragover = (e) => {
+  e.dataTransfer.dropEffect = 'copy'
 }
 </script>
 

@@ -19,3 +19,12 @@ export const getHeaderRow = (sheet) => {
   }
   return headers
 }
+
+export const isExcel = (file) => {
+  const type = file.type
+  return type === 'application/vnd.ms-excel' || type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+}
+
+// export const isExcel = file => {
+//   return /\.(xls|xlsx|csv)$/.test(file.name)
+// }

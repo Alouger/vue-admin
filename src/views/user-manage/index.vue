@@ -2,7 +2,9 @@
   <div class="user-manage-container">
     <el-card class="header">
       <div>
-        <el-button type="primary" @click="onImportExcelClick">{{ $t(`msg.excel.importExcel`) }}</el-button>
+        <el-button type="primary" @click="onImportExcelClick">{{
+          $t(`msg.excel.importExcel`)
+        }}</el-button>
         <el-button type="success">
           {{ $t(`msg.excel.exportExcel`) }}
         </el-button>
@@ -53,12 +55,14 @@
           fixed="right"
           width="260"
         >
-          <template #default>
+          <template #default="{ row }">
             <el-button type="primary">
               {{ $t('msg.excel.show') }}
             </el-button>
             <el-button type="info">{{ $t('msg.excel.showRole') }}</el-button>
-            <el-button type="danger">{{ $t('msg.excel.remove') }}</el-button>
+            <el-button type="danger" @click="onRemoveClick(row)">{{
+              $t('msg.excel.remove')
+            }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -80,9 +84,11 @@
 
 <script setup>
 import { ref, onActivated } from 'vue'
-import { getUserManageList } from '@/api/user-manage.js'
+import { getUserManageList, deleteUser } from '@/api/user-manage.js'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 // 数据相关
 const tableData = ref([])
@@ -135,6 +141,29 @@ const onImportExcelClick = () => {
  * 它将重新被激活，onActivated生命周期钩子自动被调用。
  */
 onActivated(getListData)
+
+/**
+ * 删除按钮点击事件
+ */
+const i18n = useI18n()
+const onRemoveClick = (row) => {
+  console.log(row)
+  ElMessageBox.confirm(
+    i18n.t('msg.excel.dialogTitle1') +
+      row.username +
+      i18n.t('msg.excel.dialogTitle2'),
+    {
+      type: 'warning'
+    }
+  )
+    .then(async () => {
+      await deleteUser(row._id)
+      ElMessage.success(i18n.t('msg.excel.removeSuccess'))
+      // 重新渲染数据
+      getListData()
+    })
+    .catch(() => {}) // 添加错误捕获
+}
 </script>
 
 <style lang="scss" scoped>

@@ -17,10 +17,13 @@ import * as EleIcons from '@element-plus/icons-vue'
 // filter
 import installFilter from '@/filter'
 
+import installDirective from '@/directives'
+
 const app = createApp(App)
 installElementPlus(app)
 installIcons(app)
 installFilter(app)
+installDirective(app)
 
 for (const name in EleIcons) {
   app.component(name, EleIcons[name])

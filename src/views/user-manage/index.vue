@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onActivated } from 'vue'
 import { getUserManageList } from '@/api/user-manage.js'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
@@ -127,6 +127,14 @@ const router = useRouter()
 const onImportExcelClick = () => {
   router.push('/user/import')
 }
+
+// 处理导入用户后数据不重新加载的问题
+/**
+ * 当一个组件实例从 DOM 上移除但因为被 <KeepAlive> 缓存而仍作为组件树的一部分时，
+ * 它将变为不活跃状态而不是被卸载。当一个组件实例作为缓存树的一部分插入到 DOM 中时，
+ * 它将重新被激活，onActivated生命周期钩子自动被调用。
+ */
+onActivated(getListData)
 </script>
 
 <style lang="scss" scoped>

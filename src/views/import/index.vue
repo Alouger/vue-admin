@@ -4,13 +4,42 @@
 
 <script setup>
 import UploadExcel from '@/components/UploadExcel'
+import { USER_RELATIONS } from './utils'
+import { userBatchImport } from '@/api/user-manage'
+import { ElMessage } from 'element-plus'
+import router from '@/router'
+import { useI18n } from 'vue-i18n'
 
+const i18n = useI18n()
 /**
  * 数据解析成功之后的回调
  */
-const onSuccess = (excelData) => {
-  console.log(excelData)
+const onSuccess = async ({ header, results }) => {
+  const updateData = generateData(results)
+  console.log('updateData', updateData)
+  await userBatchImport(updateData)
+  ElMessage.success({
+    message: results.length + i18n.t('msg.excel.importSuccess'),
+    type: 'success'
+  })
+  router.push('/user/manage')
 }
+
+/**
+ * 筛选数据
+ */
+const generateData = (results) => {
+  const arr = []
+  results.forEach(item => {
+    const userInfo = {}
+    Object.keys(item).forEach(key => {
+      userInfo[USER_RELATIONS[key]] = item[key]
+    })
+    arr.push(userInfo)
+  })
+  return arr
+}
+
 </script>
 
 <style lang="scss" scoped></style>

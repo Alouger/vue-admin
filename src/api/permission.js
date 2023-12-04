@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 
 /**
- * 获取所有角色
+ * 获取所有权限
  */
-export const roleList = () => {
+export const permissionList = () => {
   return request({
-    url: 'role/list',
+    url: '/permission/list',
     method: 'GET'
   })
 }

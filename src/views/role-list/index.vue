@@ -21,7 +21,11 @@
           width="260"
           #default="{ row }"
         >
-          <el-button type="primary" @click="onDistributePermissionClick(row)">
+          <el-button
+            type="primary"
+            @click="onDistributePermissionClick(row)"
+            v-permission="['distributePermission']"
+          >
             {{ $t('msg.role.assignPermissions') }}
           </el-button>
         </el-table-column>

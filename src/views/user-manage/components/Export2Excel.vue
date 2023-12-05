@@ -47,9 +47,7 @@ const loading = ref(false)
 const onConfirm = async () => {
   loading.value = true
   const allUser = (await getUserManageAllList()).list
-  console.log('allUser', allUser)
   const data = formatJson(USER_RELATIONS, allUser)
-  console.log('data', data)
   // 导入工具包
   const excel = await import('@/utils/Export2Excel')
   excel.export_json_to_excel({

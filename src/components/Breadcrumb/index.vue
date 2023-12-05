@@ -35,7 +35,6 @@ const getBreadcrumbData = () => {
     // 带有meta和title属性的就可以在面包屑展示
     (item) => item.meta && item.meta.title
   )
-  console.log(breadcrumbData.value)
 }
 // 监听路由变化时触发
 watch(
@@ -50,7 +49,6 @@ watch(
 
 // 处理点击事件
 const onLinkClick = (item) => {
-  console.log(item)
   router.push(item.path)
 }
 

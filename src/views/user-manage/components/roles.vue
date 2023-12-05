@@ -60,8 +60,6 @@ const emits = defineEmits(['update:modelValue', 'updateRole'])
  */
 const i18n = useI18n()
 const onConfirm = async () => {
-  console.log('userRoleTitleList', userRoleTitleList.value)
-  console.log('allRoleList', allRoleList.value)
   // 处理数据结构
   const roles = userRoleTitleList.value.map(title => {
     return allRoleList.value.find(role => role.title === title)
@@ -86,7 +84,6 @@ const closed = () => {
  */
 const getUserRoles = async () => {
   const res = await userRoles(props.userId)
-  console.log(res)
   userRoleTitleList.value = res.role.map((item) => item.title)
 }
 /**

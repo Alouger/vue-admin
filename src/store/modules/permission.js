@@ -20,13 +20,11 @@ export default {
      * 根据权限筛选路由
      */
     filterRoutes(context, menus) {
-      console.log('menus', menus)
       const routes = []
       // 路由权限匹配
       menus.forEach(key => {
         // 权限名 与 路由的name匹配
         routes.push(...privateRoutes.filter(item => {
-          console.log('item.name:', item.name, '----key:', key)
           return item.name === key
         }))
       })
@@ -35,7 +33,6 @@ export default {
         path: '/:catchAll(.*)',
         redirect: '/404'
       })
-      console.log('routes', routes)
       context.commit('setRoutes', routes)
       return routes
     }

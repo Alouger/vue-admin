@@ -40,10 +40,8 @@ import { watchSwitchLang } from '@/utils/i18n'
 const router = useRouter()
 let searchPool = computed(() => {
   const fRoutes = filterRoutes(router.getRoutes())
-  console.log(generateRoutes(fRoutes))
   return generateRoutes(fRoutes)
 })
-console.log(searchPool.value)
 
 /**
  * 搜索库相关
@@ -71,7 +69,6 @@ const initFuse = (searchPool) => {
   })
 }
 initFuse(searchPool)
-console.log(fuse)
 
 // 控制 search 显示
 const isShow = ref(false)
@@ -96,7 +93,6 @@ const onClose = () => {
  */
 watch(isShow, (val) => {
   // debugger
-  console.log(val)
   if (val) {
     document.body.addEventListener('click', onClose)
   } else {
@@ -110,7 +106,6 @@ const search = ref('')
 const searchOptions = ref([])
 // 搜索方法
 const querySearch = (query) => {
-  console.log(fuse.search(query))
   if (query !== '') {
     searchOptions.value = fuse.search(query)
   } else {

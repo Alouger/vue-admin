@@ -16,7 +16,6 @@ const i18n = useI18n()
  */
 const onSuccess = async ({ header, results }) => {
   const updateData = generateData(results)
-  console.log('updateData', updateData)
   await userBatchImport(updateData)
   ElMessage.success({
     message: results.length + i18n.t('msg.excel.importSuccess'),

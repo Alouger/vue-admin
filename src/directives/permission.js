@@ -3,11 +3,13 @@ import store from '@/store'
 function checkPermission(el, binding) {
   // 获取绑定的值，此处为权限
   const { value } = binding
+  console.log('value', value)
   // 获取所有的功能指令
   const points = store.getters.userInfo.permission.points
   // 当传入的指令集为数组时
   if (value && value instanceof Array) {
     // 匹配对应的指令
+    console.log('points', points)
     const hasPermission = points.some(point => {
       return value.includes(point)
     })

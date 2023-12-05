@@ -26,7 +26,6 @@ router.beforeEach(async (to, from, next) => {
         // 处理用户权限，筛选出需要添加的权限
         const filterRoutes = await store.dispatch('permission/filterRoutes', permission.menus)
         // 利用addRoute循环添加
-        console.log('filterRoutes', filterRoutes)
         filterRoutes.forEach(item => {
           router.addRoute(item)
         })

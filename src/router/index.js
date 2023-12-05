@@ -181,7 +181,6 @@ const router = createRouter({
  * 在退出登录的动作下，会触发该方法
  */
 export function resetRouter() {
-  console.log(store)
   if (
     store.getters.userInfo &&
     store.getters.userInfo.permission &&

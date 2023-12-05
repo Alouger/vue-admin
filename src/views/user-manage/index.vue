@@ -111,7 +111,6 @@ const getListData = async () => {
     page: page.value,
     size: size.value
   })
-  console.log(result)
   tableData.value = result.list
   total.value = result.total
 }
@@ -157,7 +156,6 @@ onActivated(getListData)
  */
 const i18n = useI18n()
 const onRemoveClick = (row) => {
-  console.log(row)
   ElMessageBox.confirm(
     i18n.t('msg.excel.dialogTitle1') +
       row.username +
